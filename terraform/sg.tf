@@ -19,7 +19,7 @@ module "sg_lambda_rule_outbound" {
   description = "Allow Lambda to communicate with Internet"
 }
 
-module "sg_lambda_rule_inbound_workernodes" {
+module "sg_lambda_rule_inbound" {
   source = "../modules/ec2/sg-rule-cidr"
 
   type        = "ingress"

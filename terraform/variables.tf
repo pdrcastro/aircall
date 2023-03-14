@@ -6,7 +6,7 @@ variable "region" {
 }
 
 variable "account_id" {
-  default = "809540728102"
+  default = "888888888"
 }
 
 ###########
@@ -24,7 +24,7 @@ variable "environment" {
 #VPC#
 #####
 variable "vpc_id" {
-  default = "vpc-01d63ff04d6e13511"
+  default = "vpc-123abc123abc"
 }
 
 ########
@@ -75,7 +75,7 @@ variable "source_bucket_arn" {
 }
 
 variable "subnet_ids" {
-  default = ["subnet-02a54f65a2977867f", "subnet-06d869cd214cb1bc3", "subnet-0e955f3282d1db82f"]
+  default = ["subnet-12ab12ab12", "subnet-13ab13ab13ab", "subnet-14ab14ab14ab"]
 }
 
 
