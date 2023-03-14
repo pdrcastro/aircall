@@ -1,0 +1,35 @@
+pipeline{
+    agent { label 'aircall-dev-spot' }
+
+  options {
+    timestamps()
+    ansiColor('xterm')
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '10', artifactNumToKeepStr: '10', daysToKeepStr: '10', numToKeepStr: '10'))    
+  }
+
+  stages {
+    stage ('resize'){
+        steps{
+            script{
+                Integer app_version = -1
+                String terraform_dir = "../terraform"
+                dir("${terraform_dir}"){
+                    sh "terraform init"
+                    app_version = sh(returnStdout: true, script:"terraform output version") as Integer
+                    app_version += 1
+                }
+                dir("resize/"){
+                  sh "zip resize.zip app.js package.json parser.js"
+                  sh "aws s3 cp resize.zip s3://lambda.aircall.com/${app_version}/resize.zip"
+                }
+                dir("${terraform_dir}"){
+                  sh "terraform plan -var=\"app_version=${app_version}\""
+                  sh "terraform apply -var=\"app_version=${app_version}\" -auto-approve"
+              }
+            }
+        }
+    }
+  } 
+
+
+}
